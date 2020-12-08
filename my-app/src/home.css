@@ -1,3 +1,5 @@
-.abc{
-    background-color: yellow;
-}
+@import '~antd/dist/antd.css';
+
+/*.abc{*/
+/*    background-color: yellow;*/
+/*}*/
