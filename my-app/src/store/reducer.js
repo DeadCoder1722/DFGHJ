@@ -13,7 +13,7 @@ const defaultState = {
         },
         {
             key: '2',
-            className: '高等数学',
+            className: '高数',
             classGrade: '70',
             testTime: '2020-06-22',
             credit: 5,
@@ -35,6 +35,22 @@ const defaultState = {
         }
     ]
 }  //默认数据
-export default (state = defaultState,action)=>{  //就是一个方法函数
-    return state
+export default (state = defaultState, action) => {  //就是一个方法函数
+    let newState = JSON.parse(JSON.stringify(state))
+    if (action.type === 'FIL_MYCLASS') {
+        newState.data=state.data.filter((ele) => {
+                    return ele.key > 1;
+                });
+        console.log("FIL_MYCLASS")
+    }
+    if (action.type === 'SEARCH_CLASS') {
+        newState.data=state.data.filter((ele) => {
+            return ele.className===action.name;
+        });
+        console.log("SEARCH_CLASS")
+    }
+    if (action.type === 'ALLCLASS') {
+        return defaultState
+    }
+    return newState
 }

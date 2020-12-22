@@ -2,11 +2,11 @@ import {List} from "antd";
 import React from "react";
 
 const data = [
-    'Racing car sprays burning fuel into crowd.',
-    'Japanese princess to wed commoner.',
-    'Australian walks 100km after outback crash.',
-    'Man charged over missing wedding girl.',
-    'Los Angeles battles huge wildfires.',
+    '2020年寒假母校回访活动校级优秀',
+    '2020年参加“希望小屋志愿活动',
+    '2019年参加洪家楼献血站志愿活动',
+    '2019年参加济南市图书馆志愿活动',
+    '2019年参加鲁能志愿活动'
 ];
 
 const Card3=()=>(

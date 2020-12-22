@@ -1,9 +1,10 @@
-import {Modal, Table} from "antd";
+import {Modal, Space, Table} from "antd";
 import React from "react";
 import {Input, Button} from 'antd';
 import '../App.css'
 import {ExclamationCircleOutlined} from '@ant-design/icons';
 import {connect} from 'react-redux';
+import {allClassAction, filterMyClassAction, searchClassAction} from "../actions";
 
 const {confirm} = Modal;
 
@@ -23,43 +24,6 @@ function showConfirm() {
         },
     });
 }
-
-
-// const data = [
-//     {
-//         key: '1',
-//         className: '线性代数',
-//         classGrade: '99',
-//         testTime: '2020-06-22',
-//         credit: 3,
-//         classCredit: 4.9,
-//         teacher: "小明",
-//         time: "每周三第一节",
-//         address: "五区107"
-//     },
-//     {
-//         key: '2',
-//         className: '高等数学',
-//         classGrade: '70',
-//         testTime: '2020-06-22',
-//         credit: 5,
-//         classCredit: 2,
-//         teacher: "小红",
-//         time: "每周四第一节",
-//         address: "五区108"
-//     },
-//     {
-//         key: '3',
-//         className: '体育',
-//         classGrade: '94',
-//         testTime: '2020-06-22',
-//         credit: 1,
-//         classCredit: 4.4,
-//         teacher: "小宾",
-//         time: "每周五第一节",
-//         address: "六区"
-//     }
-// ];
 
 const columns = [
     // {
@@ -100,24 +64,20 @@ const columns = [
 
 const Card2 = (props) => {
 
-    let {data, filterMyClass} = props
-
-    // function showClass() {
-    //     let datas = data;
-    //     //filter：返回为true的保留
-    //     let newDatas = datas.filter((ele) => {
-    //         return ele > 1;
-    //     });
-    //     this.setState({data: newDatas});
-    // }
+    let {data, filterMyClass,searchClass,allClass} = props
 
     return (
         <div>
             <div className="search">
-                <Search placeholder="input search text" style={{width: 300}}/>
-                <Button type="primary" onClick={() => filterMyClass}>
-                    我选的课
-                </Button>
+                <Space>
+                    <Search placeholder="请输入课程名" onSearch={value => searchClass(value)} style={{width: 300}}/>
+                    <Button type="primary" onClick={allClass}>
+                        全部课程
+                    </Button>
+                    <Button type="primary" onClick={filterMyClass}>
+                        我选的课
+                    </Button>
+                </Space>
             </div>
             <Table
                 columns={columns}
@@ -136,7 +96,27 @@ const stateToProps = (state) => {
     }
 }
 
+const dispatchToProps = (dispatch) => {
+    return {
+        filterMyClass(){
+            console.log("filterMyClass");
+            dispatch(filterMyClassAction())
+        },
+        searchClass(name){
+            console.log("searchClass");
+            console.log("name:");
+            console.log(name);
+            dispatch(searchClassAction(name))
+        },
+        allClass(){
+            console.log("allClass");
+            dispatch(allClassAction())
+        }
+
+    }
+}
 
 
-export default connect(stateToProps)(Card2);
+
+export default connect(stateToProps,dispatchToProps)(Card2);
 
