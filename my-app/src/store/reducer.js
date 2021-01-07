@@ -45,47 +45,59 @@ const defaultState = {
     ]
 }  //默认数据
 export default (state = defaultState, action) => {  //就是一个方法函数
-    let newState = JSON.parse(JSON.stringify(state))
     if (action.type === 'FIL_MYCLASS') {
-        let data1=newState.data;
-        let data=data1.filter((ele) => {
-            return ele.choosed;
-        });
-        let copyState={data}
-        console.log("copyState:");
-        console.log(copyState);
+        let newState = JSON.parse(JSON.stringify(state))
+        // let data1=newState.data;
+        // let data=data1.filter((ele) => {
+        //     return ele.choosed;
+        // });
+        // let copyState={data}
+        // console.log("copyState:");
+        // console.log(copyState);
         console.log("newState:");
         console.log(newState);
         console.log("FIL_MYCLASS");
-        return copyState;
+        return newState;
     }
     if (action.type === 'SEARCH_CLASS') {
+        let newState = JSON.parse(JSON.stringify(state))
         newState.data=state.data.filter((ele) => {
             return ele.className===action.name;
         });
         console.log("SEARCH_CLASS")
+        return newState
+
     }
     if (action.type === 'ALLCLASS') {
+        let newState = JSON.parse(JSON.stringify(state))
         console.log("ALLCLASS");
         console.log(newState.data);
-        newState.data=state.data.filter((ele) => {
-            return !ele.choosed;
-        });
+        // newState.data=state.data.filter((ele) => {
+        //     return !ele.choosed;
+        // });
         //return defaultState;
         console.log("ALLCLASS");
+        return newState
+
     }
     if (action.type === 'CHOOSECLASS') {
+        let newState = JSON.parse(JSON.stringify(state))
         newState.data[action.key].choosed=true;
         console.log("CHOOSECLASS");
         console.log("newState.data[action.key].choosed");
         console.log(newState.data[action.key].choosed);
+        return newState
+
     }
     if (action.type === 'DELETECLASS') {
+        let newState = JSON.parse(JSON.stringify(state))
         newState.data[action.key].choosed=false;
         console.log("DELETECLASS");
         console.log("newState.data[action.key].choosed");
         console.log(newState.data[action.key].choosed);
+        return newState
+
     }
     console.log("End");
-    return newState
+    return state;
 }

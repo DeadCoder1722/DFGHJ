@@ -91,6 +91,9 @@ const {Search} = Input;
 //     }
 // ];
 
+let all=true;
+let my=false;
+
 
 const Card2 = (props) => {
 
@@ -140,7 +143,7 @@ const columns = [
         <div>
             <div className="search">
                 <Space>
-                    <Search placeholder="请输入课程名" onSearch={value => searchClass(value)} style={{width: 300}}/>
+                    {/*<Search placeholder="请输入课程名" onSearch={value => searchClass(value)} style={{width: 300}}/>*/}
                     <Button type="primary" onClick={allClass}>
                         全部课程
                     </Button>
@@ -151,7 +154,9 @@ const columns = [
             </div>
             <Table
                 columns={columns}
-                dataSource={data}
+                dataSource={all?data:data.filter((ele) => {
+                    return ele.choosed;
+                })}
                 bordered
                 pagination={false}
             />
@@ -169,6 +174,8 @@ const stateToProps = (state) => {
 const dispatchToProps = (dispatch) => {
     return {
         filterMyClass() {
+            all=false;
+            my=true;
             console.log("filterMyClass");
             dispatch(filterMyClassAction())
         },
@@ -179,6 +186,8 @@ const dispatchToProps = (dispatch) => {
             dispatch(searchClassAction(name))
         },
         allClass() {
+            all=true;
+            my=false;
             console.log("allClass");
             dispatch(allClassAction())
         },
