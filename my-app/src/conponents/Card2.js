@@ -4,26 +4,97 @@ import {Input, Button} from 'antd';
 import '../App.css'
 import {ExclamationCircleOutlined} from '@ant-design/icons';
 import {connect} from 'react-redux';
-import {allClassAction, filterMyClassAction, searchClassAction} from "../actions";
+import {allClassAction, chooseClass, deleteClass, filterMyClassAction, searchClassAction} from "../actions";
 
 const {confirm} = Modal;
 
 const {Search} = Input;
 
-function showConfirm() {
-    confirm({
-        title: '确定选这门课吗?',
-        icon: <ExclamationCircleOutlined/>,
-        okText: '确定',
-        cancelText: '取消',
-        onOk() {
-            console.log('OK');
-        },
-        onCancel() {
-            console.log('Cancel');
-        },
-    });
-}
+// function showConfirm(abc) {
+//     // confirm({
+//     //     title: '确定选这门课吗?',
+//     //     icon: <ExclamationCircleOutlined/>,
+//     //     okText: '确定',
+//     //     cancelText: '取消',
+//     //     onOk() {
+//     //         console.log('OK');
+//     //     },
+//     //     onCancel() {
+//     //         console.log('Cancel');
+//     //     },
+//     // });
+//         if (abc.choosed === false)
+//             confirm({
+//                 title: '确定选这门课吗?',
+//                 icon: <ExclamationCircleOutlined/>,
+//                 okText: '确定',
+//                 cancelText: '取消',
+//                 onOk() {
+//                     console.log('OK');
+//                 },
+//                 onCancel() {
+//                     console.log('Cancel');
+//                 },
+//             });
+//         if (abc.choosed === true)
+//             confirm({
+//                 title: '确定删除这门课吗?',
+//                 icon: <ExclamationCircleOutlined/>,
+//                 okText: '确定',
+//                 cancelText: '取消',
+//                 onOk() {
+//                     console.log('OK');
+//                 },
+//                 onCancel() {
+//                     console.log('Cancel');
+//                 },
+//             });
+//
+// }
+
+// const columns = [
+//     // {
+//     //     title: '课序号',
+//     //     dataIndex: 'key',
+//     // },
+//     {
+//         title: '课程名',
+//         dataIndex: 'className'
+//     },
+//     {
+//         title: '学分',
+//         dataIndex: 'credit'
+//     },
+//     {
+//         title: '教师',
+//         dataIndex: 'teacher'
+//     },
+//
+//     {
+//         title: '上课时间',
+//         dataIndex: 'time'
+//     },
+//     {
+//         title: '上课地点',
+//         dataIndex: 'address'
+//     },
+//     {
+//         title: '操作',
+//         render: (abc) => (
+//             <>
+//                 <Button type="primary" onClick={()=>showConfirm(abc)}>
+//                     {abc.choosed?abc.tianjia:abc.shanchu}
+//                 </Button>
+//             </>
+//
+//         )
+//     }
+// ];
+
+
+const Card2 = (props) => {
+
+    let {data, filterMyClass, searchClass, allClass,showConfirm} = props
 
 const columns = [
     // {
@@ -53,18 +124,17 @@ const columns = [
     },
     {
         title: '操作',
-        render: () => (
-            <Button type="primary" onClick={showConfirm}>
-                添加
-            </Button>
+        render: (abc) => (
+            <>
+                <Button type="primary" onClick={()=>showConfirm(abc)}>
+                    {abc.choosed?abc.shanchu:abc.tianjia}
+                </Button>
+            </>
+
         )
     }
 ];
 
-
-const Card2 = (props) => {
-
-    let {data, filterMyClass,searchClass,allClass} = props
 
     return (
         <div>
@@ -98,25 +168,53 @@ const stateToProps = (state) => {
 
 const dispatchToProps = (dispatch) => {
     return {
-        filterMyClass(){
+        filterMyClass() {
             console.log("filterMyClass");
             dispatch(filterMyClassAction())
         },
-        searchClass(name){
+        searchClass(name) {
             console.log("searchClass");
             console.log("name:");
             console.log(name);
             dispatch(searchClassAction(name))
         },
-        allClass(){
+        allClass() {
             console.log("allClass");
             dispatch(allClassAction())
+        },
+        showConfirm(abc) {
+            if (abc.choosed === true)
+                confirm({
+                    title: '确定删除这门课吗?',
+                    icon: <ExclamationCircleOutlined/>,
+                    okText: '确定',
+                    cancelText: '取消',
+                    onOk() {
+                        console.log('OK确定删除这门课');
+                        dispatch(deleteClass(abc.key))
+                    },
+                    onCancel() {
+                        console.log('Cancel');
+                    },
+                });
+            if (abc.choosed === false)
+                confirm({
+                    title: '确定选这门课吗?',
+                    icon: <ExclamationCircleOutlined/>,
+                    okText: '确定',
+                    cancelText: '取消',
+                    onOk() {
+                        console.log('OK确定选这门课');
+                        dispatch(chooseClass(abc.key))
+                    },
+                    onCancel() {
+                        console.log('Cancel');
+                    },
+                });
         }
-
     }
 }
 
 
-
-export default connect(stateToProps,dispatchToProps)(Card2);
+export default connect(stateToProps, dispatchToProps)(Card2);
 
