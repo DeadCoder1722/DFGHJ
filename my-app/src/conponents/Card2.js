@@ -6,6 +6,7 @@ import {ExclamationCircleOutlined} from '@ant-design/icons';
 import {connect} from 'react-redux';
 import {chooseClass, deleteClass, reStateAction} from "../actions";
 import store from "../store";
+import axios from "axios";
 
 const {confirm} = Modal;
 //
@@ -20,12 +21,12 @@ class Card2 extends Component {
     constructor(props) {
         super(props);
         this.state = store.getState();
-        this.filterMyClass=this.filterMyClass.bind(this);
-        this.showConfirm=this.showConfirm.bind(this);
-        this.allClass=this.allClass.bind(this);
+        this.filterMyClass = this.filterMyClass.bind(this);
+        this.showConfirm = this.showConfirm.bind(this);
+        this.allClass = this.allClass.bind(this);
     }
 
-    render(){
+    render() {
 
         console.log("render");
 
@@ -59,8 +60,8 @@ class Card2 extends Component {
                 title: '操作',
                 render: (abc) => (
                     <>
-                        <Button type="primary" onClick={()=>this.showConfirm(abc)}>
-                            {abc.choosed?abc.shanchu:abc.tianjia}
+                        <Button type="primary" onClick={() => this.showConfirm(abc)}>
+                            {abc.choosed ? abc.shanchu : abc.tianjia}
                         </Button>
                     </>
 
@@ -83,11 +84,11 @@ class Card2 extends Component {
                 </div>
                 <Table
                     columns={columns}
-                    dataSource={this.state.all?this.state.data:this.state.data.filter((ele) => {
+                    dataSource={this.state.all ? this.state.data : this.state.data.filter((ele) => {
                         return ele.choosed;
                     })}
-                    scroll={{ y: 280 }}
-                    style={{height:300}}
+                    scroll={{y: 280}}
+                    style={{height: 300}}
                     bordered
                     pagination={false}
                 />
@@ -95,14 +96,41 @@ class Card2 extends Component {
         )
     }
 
+    componentDidMount() {
+        console.log("In componentDidMount");
+        const _this = this;    //先存一下this，以防使用箭头函数this会指向我们不希望它所指向的对象。
+        // axios.get('https://5b5e71c98e9f160014b88cc9.mockapi.io/api/v1/lists')
+        axios.get('http://localhost:8080/Project4/data')
+            .then(function (response) {
+                console.log("response.data");
+                console.log(response.data);
+                let a = Object.values(response.data);
+                console.log("a");
+                console.log(a[0]);
+                _this.setState({
+                        data:a[0]
+                    }
+                    // isLoaded:true
+                );
+
+            })
+            .catch(function (error) {
+                console.log(error);
+                // _this.setState({
+                //     isLoaded:false,
+                //     error:error
+                // })
+            })
+    }
+
     filterMyClass() {
-        this.setState({all:false});
+        this.setState({all: false});
         console.log("filterMyClass");
         store.dispatch(reStateAction())
     }
 
     allClass() {
-        this.setState({all:true});
+        this.setState({all: true});
         console.log("allClass");
         store.dispatch(reStateAction())
     }
