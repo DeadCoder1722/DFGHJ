@@ -105,7 +105,7 @@ class Card2 extends Component {
                 console.log("response.data");
                 console.log(response.data);
                 let a = Object.values(response.data);
-                console.log("a");
+                console.log("Card2 Array:");
                 console.log(a[0]);
                 _this.setState({
                         data:a[0]
@@ -125,6 +125,7 @@ class Card2 extends Component {
 
     filterMyClass() {
         this.setState({all: false});
+
         console.log("filterMyClass");
         store.dispatch(reStateAction())
     }

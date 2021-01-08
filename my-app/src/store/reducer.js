@@ -75,10 +75,7 @@ const defaultState = {
             classGrade: '99',
             testTime: '2020-06-22',
             credit: 3,
-            classCredit: 4.9,
-            teacher: "小明",
-            time: "每周三第一节",
-            address: "五区107",
+            classCredit: 4.9
         },
         {
             key: 1,
@@ -86,10 +83,7 @@ const defaultState = {
             classGrade: '70',
             testTime: '2020-06-22',
             credit: 4.5,
-            classCredit: 2,
-            teacher: "小红",
-            time: "每周四第一节",
-            address: "五区108",
+            classCredit: 2
         },
         {
             key: 2,
@@ -97,10 +91,7 @@ const defaultState = {
             classGrade: '94',
             testTime: '2020-06-22',
             credit: 1,
-            classCredit: 4.4,
-            teacher: "小宾",
-            time: "每周五第一节",
-            address: "四区302"
+            classCredit: 4.4
         }
     ],
     all:true
