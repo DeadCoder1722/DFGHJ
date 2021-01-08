@@ -102,7 +102,8 @@ const defaultState = {
             time: "每周五第一节",
             address: "四区302"
         }
-    ]
+    ],
+    all:true
 }  //默认数据
 
 export default (state = defaultState, action) => {  //就是一个方法函数
