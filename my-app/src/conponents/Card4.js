@@ -30,50 +30,17 @@ const columns = [
     }
 ];
 
-class Card4 extends Component {
-    constructor(props) {
-        super(props);
-        this.state = store.getState();
-    }
+const Card4=()=>(
+    <Table
+        columns={columns}
+        dataSource={store.getState().dataGrade}
+        bordered
+        pagination={false}
+        // title={() => 'Header'}
+        // footer={() => 'Footer'}
+    />
+)
 
-    render() {
-        return (
-            <Table
-                columns={columns}
-                dataSource={this.state.dataGrade}
-                bordered
-                pagination={false}
-            />
-        )
-    }
-
-    componentDidMount() {
-        console.log("In componentDidMount4");
-        const _this=this;
-        // axios.get('https://5b5e71c98e9f160014b88cc9.mockapi.io/api/v1/lists')
-        axios.get('http://localhost:8080/Project4/dataGrade')
-            .then(function (response) {
-                console.log("response.data");
-                console.log(response.data);
-                let a = Object.values(response.data);
-                console.log("Card4 array:");
-                console.log(a[0]);
-                _this.setState({
-                        dataGrade:a[0]
-                    }
-                    // isLoaded:true
-                );
-
-            })
-            .catch(function (error) {
-                console.log(error);
-                // _this.setState({
-                //     isLoaded:false,
-                //     error:error
-                // })
-            })
-    }
-}
 
 
 export default Card4;
